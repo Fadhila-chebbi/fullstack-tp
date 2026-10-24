@@ -1,0 +1,28 @@
+
+<div class="app-shell">
+  <header class="site-header">
+    <a class="brand" routerLink="/">
+      <span class="brand-icon">F</span>
+      <span>FullStack<span class="brand-accent">Pro</span></span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navigation principale">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        Home
+      </a>
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/contact" routerLinkActive="active">Contact</a>
+    </nav>
+
+    <a class="header-cta" routerLink="/contact">Get in touch <span>↗</span></a>
+  </header>
+
+  <main class="page-content">
+    <router-outlet />
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 FullStackPro</span>
+    <span>Built with Angular</span>
+  </footer>
+</div>

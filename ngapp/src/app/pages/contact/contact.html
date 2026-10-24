@@ -1,0 +1,183 @@
+<main class="contact-page">
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">F</span>
+      FullStack TP
+    </a>
+
+    <div class="nav-links">
+      <a routerLink="/">Accueil</a>
+      <a routerLink="/login">Connexion</a>
+      <a routerLink="/contact" class="active">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <span class="eyebrow">CONTACTEZ-NOUS</span>
+
+    <h1>
+      Parlons de votre
+      <span>prochain projet.</span>
+    </h1>
+
+    <p>
+      Une question, une idée ou un projet ?
+      Envoyez-nous un message, nous serons ravis de vous répondre.
+    </p>
+  </section>
+
+  <!-- Contact Content -->
+  <section class="contact-layout">
+
+    <!-- Contact Information -->
+    <aside class="contact-info">
+      <div class="info-content">
+        <span class="info-label">NOUS CONTACTER</span>
+
+        <h2>Restons en contact.</h2>
+
+        <p class="info-description">
+          N'hésitez pas à nous écrire. Présentez-nous votre demande
+          et nous vous répondrons dès que possible.
+        </p>
+
+        <div class="info-item">
+          <span class="info-icon">✉</span>
+          <div>
+            <h3>E-mail</h3>
+            <p>Envoyez-nous votre demande via le formulaire.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="info-icon">◷</span>
+          <div>
+            <h3>Disponibilité</h3>
+            <p>Nous traiterons votre demande dès que possible.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="info-icon">✓</span>
+          <div>
+            <h3>Votre projet</h3>
+            <p>Chaque question mérite une réponse adaptée.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="decorative-circle circle-one"></div>
+      <div class="decorative-circle circle-two"></div>
+    </aside>
+
+    <!-- Contact Form -->
+    <div class="form-card">
+      <div class="form-heading">
+        <h2>Envoyer un message</h2>
+        <p>Remplissez les champs ci-dessous.</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" #contactForm="ngForm" novalidate>
+
+        <div class="form-group">
+          <label for="name">Nom complet <span>*</span></label>
+
+          <input
+            id="name"
+            type="text"
+            name="name"
+            [(ngModel)]="name"
+            placeholder="Ex. : Fadhila Chebbi"
+            autocomplete="name"
+            required
+            minlength="2"
+            #nameField="ngModel"
+          />
+
+          @if (nameField.invalid && nameField.touched) {
+            <small class="field-error">
+              Veuillez saisir votre nom (2 caractères minimum).
+            </small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="email">Adresse e-mail <span>*</span></label>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="contact@gmail.com"
+            autocomplete="email"
+            required
+            email
+            #emailField="ngModel"
+          />
+
+          @if (emailField.invalid && emailField.touched) {
+            <small class="field-error">
+              Veuillez saisir une adresse e-mail valide.
+            </small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="message">Votre message <span>*</span></label>
+
+          <textarea
+            id="message"
+            name="message"
+            [(ngModel)]="message"
+            placeholder="Décrivez votre demande..."
+            rows="5"
+            required
+            minlength="10"
+            #messageField="ngModel"
+          ></textarea>
+
+          @if (messageField.invalid && messageField.touched) {
+            <small class="field-error">
+              Votre message doit contenir au moins 10 caractères.
+            </small>
+          }
+        </div>
+
+        @if (feedback) {
+          <div
+            class="feedback"
+            [class.success]="feedbackType === 'success'"
+            [class.error]="feedbackType === 'error'"
+            role="status"
+          >
+            {{ feedback }}
+          </div>
+        }
+
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="contactForm.invalid"
+        >
+          Envoyer le message
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <p class="required-note">
+          <span>*</span> Champs obligatoires
+        </p>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 FullStack TP — Tous droits réservés.</p>
+  </footer>
+
+</main>

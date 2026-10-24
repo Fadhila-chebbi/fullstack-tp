@@ -1,0 +1,26 @@
+# Dependencies
+**/node_modules/
+
+# Build outputs and caches
+**/dist/
+**/.angular/cache/
+**/.next/
+**/out/
+**/coverage/
+
+# Environment variables and secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Logs
+**/npm-debug.log*
+**/yarn-debug.log*
+**/pnpm-debug.log*
+
+# Operating system
+.DS_Store
+Thumbs.db
+# Local backups of previous Git repositories
+ngapp-git-backup/
+nxapp-git-backup/

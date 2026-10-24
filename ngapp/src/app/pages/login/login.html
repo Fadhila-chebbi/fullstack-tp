@@ -1,0 +1,91 @@
+
+<main class="login-page">
+  <a class="brand" routerLink="/">
+    <span class="brand-icon">F</span>
+    <span>FullStackPro</span>
+  </a>
+
+  <section class="login-card">
+    <div class="welcome-icon">✦</div>
+
+    <p class="eyebrow">WELCOME BACK</p>
+    <h1>Content de vous revoir</h1>
+    <p class="subtitle">
+      Connectez-vous à votre espace de travail.
+    </p>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+      <div class="form-group">
+        <label for="email">Adresse e-mail</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="vous@entreprise.com"
+          autocomplete="email"
+          required
+          email
+          #emailField="ngModel"
+        />
+
+        @if (emailField.invalid && emailField.touched) {
+          <small class="field-error">
+            Saisissez une adresse e-mail valide.
+          </small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Votre mot de passe"
+            autocomplete="current-password"
+            required
+            #passwordField="ngModel"
+          />
+
+          <button
+            type="button"
+            class="toggle-password"
+            (click)="showPassword = !showPassword"
+            [attr.aria-label]="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+          >
+            {{ showPassword ? 'Masquer' : 'Afficher' }}
+          </button>
+        </div>
+
+        @if (passwordField.invalid && passwordField.touched) {
+          <small class="field-error">
+            Le mot de passe est obligatoire.
+          </small>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <p class="feedback error" role="alert">{{ errorMessage }}</p>
+      }
+
+      <button
+        class="submit-button"
+        type="submit"
+        [disabled]="loginForm.invalid"
+      >
+        Se connecter <span>→</span>
+      </button>
+    </form>
+
+    <p class="bottom-text">
+      Vous découvrez FullStackPro ?
+      <a routerLink="/contact">Contactez-nous</a>
+    </p>
+  </section>
+
+  <footer>© 2026 FullStackPro · Tous droits réservés</footer>
+</main>
