@@ -208,3 +208,156 @@
   display: flex;
   align-items: center;
   justify-content: center
+}
+
+/* Services chargés depuis l'API REST */
+.api-services {
+  padding: 5rem 8%;
+  background: #f8f9fc;
+}
+
+.api-services .section-heading {
+  max-width: 720px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.api-service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.api-service-card {
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.api-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.1);
+}
+
+.service-id {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #6d5ce8;
+}
+
+.api-service-card h3 {
+  margin: 0 0 0.5rem;
+}
+
+.api-service-card p {
+  margin: 0;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.api-error {
+  text-align: center;
+  color: #b91c1c;
+}
+/* ===== Section features ===== */
+.features {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px;
+}
+
+.features .section-heading {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+
+.features .section-heading h2 {
+  font-size: 2.2rem;
+  margin: 16px 0 12px;
+}
+
+.features .section-heading p {
+  color: #6b7280;
+  font-size: 1.05rem;
+}
+
+/* ===== Grille ===== */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ===== Cartes ===== */
+.feature-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(17, 24, 39, 0.1);
+}
+
+/* ===== Icônes ===== */
+.feature-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.feature-icon.purple { background: #ede9fe; color: #6d28d9; }
+.feature-icon.blue   { background: #dbeafe; color: #1d4ed8; }
+.feature-icon.orange { background: #ffedd5; color: #c2410c; }
+
+/* ===== Textes ===== */
+.feature-card h3 {
+  font-size: 1.25rem;
+  margin: 0 0 10px;
+  color: #111827;
+}
+
+.feature-card p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  flex-grow: 1;
+}
+
+.feature-card a {
+  color: #6d28d9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.feature-card a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}

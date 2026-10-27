@@ -62,33 +62,58 @@
     <div class="floating-badge"></div>
   </div>
 </section>
+
+<section class="api-services">
+  <div class="section-heading">
+    <span class="eyebrow">BACKEND INTEGRATION</span>
+    <h2>Our Services</h2>
+    <p>These services are loaded directly from the Express REST API.</p>
+  </div>
+  @if (errorMessage()) {
+    <p class="api-error">{{ errorMessage() }}</p>
+  }
+
+  <div class="api-service-grid">
+    @for (service of services(); track service.id) {
+      <article class="api-service-card">
+        <span class="service-id">SERVICE #{{ service.id }}</span>
+        <h3>{{ service.nom }}</h3>
+        <p>{{ service.description }}</p>
+      </article>
+    } @empty {
+      @if (!loading()) {
+        <p>No services available.</p>
+      }
+    }
+  </div>
+</section>
 <section class="features">
   <div class="section-heading">
-    <span class="eyebrow">WHAT YOU WILL FIND</span>
-    <h2>One project. Three essential pages.</h2>
-    <p>A simple foundation for a professional full stack application.</p>
+    <span class="eyebrow">PLATFORM FEATURES</span>
+    <h2>Built for clarity, security and efficiency.</h2>
+    <p>Three core modules to navigate, authenticate and communicate, all in one place.</p>
   </div>
 
   <div class="feature-grid">
     <article class="feature-card">
       <div class="feature-icon purple">⌂</div>
-      <h3>Home</h3>
-      <p>A welcoming landing page with clear information and navigation.</p>
-      <a routerLink="/">Explore home →</a>
+      <h3>Dashboard Home</h3>
+      <p>A clear overview of our services, loaded in real time from our REST API.</p>
+      <a routerLink="/">Discover services →</a>
     </article>
 
     <article class="feature-card">
-      <div class="feature-icon blue">↗</div>
-      <h3>Login</h3>
-      <p>A structured sign-in interface with form validation.</p>
-      <a routerLink="/login">Go to login →</a>
+      <div class="feature-icon blue">🔒</div>
+      <h3>Secure Access</h3>
+      <p>A protected sign-in with instant validation to keep your account safe.</p>
+      <a routerLink="/login">Sign in →</a>
     </article>
 
     <article class="feature-card">
       <div class="feature-icon orange">✉</div>
-      <h3>Contact</h3>
-      <p>A dedicated page for messages and contact information.</p>
-      <a routerLink="/contact">Contact us →</a>
+      <h3>Direct Contact</h3>
+      <p>Reach our team in a few clicks. Every message receives a fast and personal answer.</p>
+      <a routerLink="/contact">Contact the team →</a>
     </article>
   </div>
 </section>
