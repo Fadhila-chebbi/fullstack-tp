@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
@@ -20,7 +19,8 @@ export interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthApi {
-  private readonly apiUrl = 'http://localhost:3001/api/auth';
+  private readonly apiUrl =
+    'https://tp3-angular-backend.onrender.com/api/auth';
 
   constructor(private http: HttpClient) {}
 

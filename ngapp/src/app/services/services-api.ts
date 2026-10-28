@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,7 +12,8 @@ export interface ServiceItem {
   providedIn: 'root'
 })
 export class ServiceApi {
-  private readonly apiUrl = 'http://localhost:3001/api/services';
+  private readonly apiUrl =
+    'https://tp3-angular-backend.onrender.com/api/services';
 
   constructor(private http: HttpClient) {}
 
