@@ -90,8 +90,12 @@ app.use(rateLimit({
   }
 }));
 
+
 app.use(cors({
-  origin: 'http://localhost:4200',
+  origin: [
+    'http://localhost:4200',
+    'https://tp3-angular-frontend.onrender.com'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
