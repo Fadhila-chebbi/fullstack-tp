@@ -96,7 +96,7 @@ app.use(cors({
     'http://localhost:4200',
     'https://tp3-angular-frontend.onrender.com'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
