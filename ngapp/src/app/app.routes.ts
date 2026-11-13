@@ -1,6 +1,7 @@
 
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
+import { ServiceDetails } from './pages/service-details/service-details';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,17 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/contact/contact').then((m) => m.Contact),
     title: 'Contact | FullStackPro',
+  },
+  {
+    path: 'services/:id',
+    component: ServiceDetails,
+    title: 'Service Details | FullStackPro',
+  },
+  {
+    path: 'services',
+    loadComponent: () =>
+      import('./pages/services/services').then((m) => m.Services),
+    title: 'Services | FullStackPro',
   },
   {
     path: '**',

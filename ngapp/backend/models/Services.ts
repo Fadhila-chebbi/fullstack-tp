@@ -1,11 +1,8 @@
-
 import mongoose, { Schema, Document } from 'mongoose';
-
 export interface IService extends Document {
   nom: string;
   description: string;
 }
-
 const serviceSchema = new Schema<IService>(
   {
     nom: {

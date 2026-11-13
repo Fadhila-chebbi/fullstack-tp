@@ -1,0 +1,135 @@
+
+<section class="services-page">
+
+  <!-- PAGE HEADER -->
+  <header class="services-header">
+
+  
+
+    <h1>
+      Solutions that
+      <span>move you forward.</span>
+    </h1>
+
+    <p>
+      Discover the digital services that turn your ideas
+      into reliable and modern solutions.
+    </p>
+
+  </header>
+
+
+  <!-- SERVICES -->
+  <section class="services-content">
+
+    <div class="section-heading">
+      <div>
+        <span class="section-label">WHAT WE DO</span>
+        <h2>Explore our services</h2>
+      </div>
+
+      <span class="services-count">01 — 04</span>
+    </div>
+
+
+    @if (loading()) {
+
+      <div class="status-message">
+        <span class="loader"></span>
+        <p>Loading our services...</p>
+      </div>
+
+    } @else if (errorMessage()) {
+
+      <div class="api-error">
+        <span>!</span>
+        <h3>Unable to load services</h3>
+        <p>{{ errorMessage() }}</p>
+      </div>
+
+    } @else {
+
+      <div class="services-grid">
+
+        @for (service of services(); track service.id) {
+
+          <a
+            class="service-card"
+            [routerLink]="['/services', service.id]"
+          >
+
+            <div class="card-top">
+
+              <span class="service-number">
+                SERVICE 0{{ service.id }}
+              </span>
+
+              <span class="service-icon">
+                @switch (service.id) {
+                  @case (1) { &lt;/&gt; }
+                  @case (2) { ✳ }
+                  @case (3) { ↗ }
+                  @case (4) { ◈ }
+                  @default { ✦ }
+                }
+              </span>
+
+            </div>
+
+            <div class="card-content">
+
+              <span class="card-label">
+                DIGITAL SOLUTION
+              </span>
+
+              <h3>{{ service.nom }}</h3>
+
+              <p>{{ service.description }}</p>
+
+            </div>
+
+            <div class="card-bottom">
+              <span>Discover this service</span>
+              <span class="card-arrow">↗</span>
+            </div>
+
+          </a>
+
+        } @empty {
+
+          <div class="status-message empty-message">
+            <p>No services available at the moment.</p>
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+  </section>
+
+
+  <!-- CONTACT CTA -->
+  <section class="services-cta">
+
+    <div class="cta-content">
+      <span class="section-label">HAVE A PROJECT IN MIND?</span>
+
+      <h2>
+        Let's turn your
+        <span>idea into reality.</span>
+      </h2>
+
+      <p>
+        Tell us what you have in mind. Let's build something great.
+      </p>
+    </div>
+
+    <a routerLink="/contact" class="cta-button">
+      Let's talk <span>↗</span>
+    </a>
+
+  </section>
+
+</section>

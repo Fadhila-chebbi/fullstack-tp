@@ -1,0 +1,180 @@
+
+<div class="service-detail-page">
+  <div class="detail-container">
+
+    @if (loading()) {
+      <div class="details-state">
+        <div class="loader"></div>
+        <p>Loading service details...</p>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="details-state error-state">
+        <div class="state-icon">!</div>
+        <h2>Service unavailable</h2>
+        <p>{{ errorMessage() }}</p>
+        <a routerLink="/services" class="back-button">
+          Back to Services
+        </a>
+      </div>
+    } @else if (service(); as item) {
+      @if (presentation(); as info) {
+
+        <a routerLink="/services" class="back-link">
+          <span>←</span> Back to Services
+        </a>
+
+        <!-- SERVICE HERO -->
+        <section class="detail-hero">
+
+          <div class="hero-content">
+
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              FULLSTACKPRO / OUR SERVICES
+            </div>
+
+            <span class="service-reference">
+              SERVICE #{{ item.id }}
+            </span>
+
+            <h1>{{ item.nom }}</h1>
+
+            <p class="hero-description">
+              {{ info.subtitle }}
+            </p>
+
+            <p class="hero-intro">
+              {{ item.description }}
+            </p>
+
+            <div class="hero-actions">
+              <a routerLink="/contact" class="primary-button">
+                Start your project <span>↗</span>
+              </a>
+
+              <a routerLink="/services" class="secondary-button">
+                Explore services
+              </a>
+            </div>
+
+            <div class="hero-note">
+              <span>✦</span>
+              Let's turn your vision into something real.
+            </div>
+
+          </div>
+
+          <!-- SERVICE IMAGE -->
+          <div class="hero-image">
+
+            <img
+              [src]="info.image"
+              [alt]="info.imageAlt"
+            >
+
+            <div class="image-overlay">
+              <span>FULLSTACKPRO</span>
+              <strong>Ideas deserve great execution.</strong>
+              <small>DIGITAL SOLUTIONS</small>
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- BENEFITS -->
+        <section class="features-section">
+
+          <div class="section-heading">
+            <span class="section-label">THE VALUE FOR YOU</span>
+
+            <h2>
+              More than a service.
+              <span>A solution that works.</span>
+            </h2>
+
+            <p>
+              Everything is designed to help your project
+              move forward with confidence.
+            </p>
+          </div>
+
+          <div class="features-grid">
+
+            @for (feature of info.features; track feature; let i = $index) {
+              <article class="feature-card">
+
+                <span class="feature-number">
+                  0{{ i + 1 }}
+                </span>
+
+                <span class="feature-check">✓</span>
+
+                <h3>{{ feature }}</h3>
+
+              </article>
+            }
+
+          </div>
+
+        </section>
+
+
+        <!-- TECHNOLOGIES -->
+        <section class="technologies-section">
+
+          <div class="technology-heading">
+            <div>
+              <span class="section-label">OUR TOOLKIT</span>
+              <h2>Built with the right tools.</h2>
+            </div>
+
+            <p>
+              Reliable technologies for quality results.
+            </p>
+          </div>
+
+          <div class="technology-list">
+
+            @for (technology of info.technologies; track technology) {
+              <span class="technology-item">
+                {{ technology }}
+              </span>
+            }
+
+          </div>
+
+        </section>
+
+
+        <!-- CALL TO ACTION -->
+        <section class="detail-cta">
+
+          <div class="cta-content">
+            <span class="section-label">
+              YOUR NEXT STEP STARTS HERE
+            </span>
+
+            <h2>
+              Have a vision?
+              <span>Let's make it happen.</span>
+            </h2>
+
+            <p>
+              Every great project starts with an idea.
+              Tell us yours and let's build something meaningful.
+            </p>
+          </div>
+
+          <a routerLink="/contact" class="cta-button">
+            Let's talk <span>↗</span>
+          </a>
+
+        </section>
+
+      }
+    }
+
+  </div>
+</div>

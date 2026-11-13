@@ -1,5 +1,6 @@
 
 import 'dotenv/config';
+
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import mongoose, { Schema, Model, Document } from 'mongoose';
@@ -9,6 +10,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const app = express();
+
 const PORT = Number(process.env.PORT) || 3001;
 const MONGODB_URI = process.env.MONGODB_URI;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -17,7 +19,8 @@ if (!JWT_SECRET || JWT_SECRET === 'TA_CLE_SECRETE') {
   throw new Error('Configure une vraie valeur JWT_SECRET dans .env');
 }
 
-// ==================== Modèle Service ====================
+
+// ==================== MODELE SERVICE ====================
 
 interface IService extends Document {
   id: number;
@@ -27,9 +30,21 @@ interface IService extends Document {
 
 const serviceSchema = new Schema<IService>(
   {
-    id: { type: Number, required: true, unique: true },
-    nom: { type: String, required: true, trim: true },
-    description: { type: String, required: true, trim: true }
+    id: {
+      type: Number,
+      required: true,
+      unique: true
+    },
+    nom: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true
+    }
   },
   { timestamps: true }
 );
@@ -38,7 +53,8 @@ const Service: Model<IService> =
   mongoose.models.Service ||
   mongoose.model<IService>('Service', serviceSchema);
 
-// ==================== Modèle User ====================
+
+// ==================== MODELE USER ====================
 
 interface IUser extends Document {
   nom: string;
@@ -48,7 +64,11 @@ interface IUser extends Document {
 
 const userSchema = new Schema<IUser>(
   {
-    nom: { type: String, required: true, trim: true },
+    nom: {
+      type: String,
+      required: true,
+      trim: true
+    },
     email: {
       type: String,
       required: true,
@@ -56,7 +76,11 @@ const userSchema = new Schema<IUser>(
       lowercase: true,
       trim: true
     },
-    password: { type: String, required: true, select: false }
+    password: {
+      type: String,
+      required: true,
+      select: false
+    }
   },
   { timestamps: true }
 );
@@ -65,7 +89,8 @@ const User: Model<IUser> =
   mongoose.models.User ||
   mongoose.model<IUser>('User', userSchema);
 
-// ==================== Type utilisateur authentifié ====================
+
+// ==================== TYPE UTILISATEUR AUTHENTIFIE ====================
 
 declare global {
   namespace Express {
@@ -75,7 +100,8 @@ declare global {
   }
 }
 
-// ==================== Sécurité et middlewares ====================
+
+// ==================== SECURITE ET MIDDLEWARES ====================
 
 app.use(helmet());
 
@@ -90,7 +116,6 @@ app.use(rateLimit({
   }
 }));
 
-
 app.use(cors({
   origin: [
     'http://localhost:4200',
@@ -102,7 +127,27 @@ app.use(cors({
 
 app.use(express.json({ limit: '10kb' }));
 
-// ==================== Authentification JWT ====================
+
+// ==================== OUTILS DE VALIDATION ====================
+
+function isDuplicateKeyError(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    error.code === 11000
+  );
+}
+
+function isValidText(value: unknown): value is string {
+  return (
+    typeof value === 'string' &&
+    value.trim().length > 0
+  );
+}
+
+
+// ==================== AUTHENTIFICATION JWT ====================
 
 function authenticateToken(
   req: Request,
@@ -131,7 +176,9 @@ function authenticateToken(
     }
 
     req.userId = decoded.sub;
+
     return next();
+
   } catch {
     return res.status(401).json({
       success: false,
@@ -140,13 +187,15 @@ function authenticateToken(
   }
 }
 
-// ==================== POST : inscription ====================
+
+// ==================== INSCRIPTION ====================
 
 app.post('/api/auth/register', async (req: Request, res: Response) => {
+
   const { nom, email, password } = req.body;
 
   if (
-    typeof nom !== 'string' || !nom.trim() ||
+    !isValidText(nom) ||
     typeof email !== 'string' ||
     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ||
     typeof password !== 'string' ||
@@ -159,8 +208,12 @@ app.post('/api/auth/register', async (req: Request, res: Response) => {
   }
 
   try {
+
     const normalizedEmail = email.trim().toLowerCase();
-    const existingUser = await User.findOne({ email: normalizedEmail });
+
+    const existingUser = await User.findOne({
+      email: normalizedEmail
+    });
 
     if (existingUser) {
       return res.status(409).json({
@@ -195,13 +248,10 @@ app.post('/api/auth/register', async (req: Request, res: Response) => {
         token
       }
     });
+
   } catch (error: unknown) {
-    if (
-      typeof error === 'object' &&
-      error !== null &&
-      'code' in error &&
-      error.code === 11000
-    ) {
+
+    if (isDuplicateKeyError(error)) {
       return res.status(409).json({
         success: false,
         message: 'Cette adresse email est déjà utilisée.'
@@ -215,9 +265,11 @@ app.post('/api/auth/register', async (req: Request, res: Response) => {
   }
 });
 
-// ==================== POST : connexion ====================
+
+// ==================== CONNEXION ====================
 
 app.post('/api/auth/login', async (req: Request, res: Response) => {
+
   const { email, password } = req.body;
 
   if (
@@ -233,6 +285,7 @@ app.post('/api/auth/login', async (req: Request, res: Response) => {
   }
 
   try {
+
     const user = await User.findOne({
       email: email.trim().toLowerCase()
     }).select('+password');
@@ -262,6 +315,7 @@ app.post('/api/auth/login', async (req: Request, res: Response) => {
         token
       }
     });
+
   } catch {
     return res.status(500).json({
       success: false,
@@ -270,12 +324,20 @@ app.post('/api/auth/login', async (req: Request, res: Response) => {
   }
 });
 
-// ==================== GET : tous les services (public) ====================
+
+// ==================== SERVICES : GET ALL ====================
 
 app.get('/api/services', async (_req: Request, res: Response) => {
+
   try {
+
     const services = await Service.find().sort({ id: 1 });
-    return res.status(200).json({ success: true, data: services });
+
+    return res.status(200).json({
+      success: true,
+      data: services
+    });
+
   } catch {
     return res.status(500).json({
       success: false,
@@ -284,9 +346,11 @@ app.get('/api/services', async (_req: Request, res: Response) => {
   }
 });
 
-// ==================== GET : un service (public) ====================
+
+// ==================== SERVICES : GET ONE ====================
 
 app.get('/api/services/:id', async (req: Request, res: Response) => {
+
   const id = Number(req.params.id);
 
   if (!Number.isInteger(id) || id < 1) {
@@ -297,6 +361,7 @@ app.get('/api/services/:id', async (req: Request, res: Response) => {
   }
 
   try {
+
     const service = await Service.findOne({ id });
 
     if (!service) {
@@ -306,7 +371,11 @@ app.get('/api/services/:id', async (req: Request, res: Response) => {
       });
     }
 
-    return res.status(200).json({ success: true, data: service });
+    return res.status(200).json({
+      success: true,
+      data: service
+    });
+
   } catch {
     return res.status(500).json({
       success: false,
@@ -315,18 +384,17 @@ app.get('/api/services/:id', async (req: Request, res: Response) => {
   }
 });
 
-// ==================== POST : ajouter un service (protégé) ====================
+
+// ==================== SERVICES : CREATE ====================
 
 app.post(
   '/api/services',
   authenticateToken,
   async (req: Request, res: Response) => {
+
     const { nom, description } = req.body;
 
-    if (
-      typeof nom !== 'string' || !nom.trim() ||
-      typeof description !== 'string' || !description.trim()
-    ) {
+    if (!isValidText(nom) || !isValidText(description)) {
       return res.status(400).json({
         success: false,
         message: 'Le nom et la description sont obligatoires.'
@@ -334,8 +402,12 @@ app.post(
     }
 
     try {
+
       const dernierService = await Service.findOne().sort({ id: -1 });
-      const prochainId = dernierService ? dernierService.id + 1 : 1;
+
+      const prochainId = dernierService
+        ? dernierService.id + 1
+        : 1;
 
       const nouveauService = await Service.create({
         id: prochainId,
@@ -348,6 +420,7 @@ app.post(
         message: 'Service ajouté avec succès.',
         data: nouveauService
       });
+
     } catch {
       return res.status(500).json({
         success: false,
@@ -357,21 +430,25 @@ app.post(
   }
 );
 
-// ==================== Page d'accueil ====================
+
+// ==================== PAGE D'ACCUEIL API ====================
 
 app.get('/', (_req: Request, res: Response) => {
+
   return res.json({
     message: 'API Angular opérationnelle',
     status: 'success'
   });
 });
 
-// ==================== PUT : modifier un service (protégé) ====================
+
+// ==================== SERVICES : UPDATE ====================
 
 app.put(
   '/api/services/:id',
   authenticateToken,
   async (req: Request, res: Response) => {
+
     const id = Number(req.params.id);
     const { nom, description } = req.body;
 
@@ -382,10 +459,7 @@ app.put(
       });
     }
 
-    if (
-      typeof nom !== 'string' || !nom.trim() ||
-      typeof description !== 'string' || !description.trim()
-    ) {
+    if (!isValidText(nom) || !isValidText(description)) {
       return res.status(400).json({
         success: false,
         message: 'Le nom et la description sont obligatoires.'
@@ -393,10 +467,17 @@ app.put(
     }
 
     try {
+
       const serviceModifie = await Service.findOneAndUpdate(
         { id },
-        { nom: nom.trim(), description: description.trim() },
-        { returnDocument: 'after', runValidators: true }
+        {
+          nom: nom.trim(),
+          description: description.trim()
+        },
+        {
+          returnDocument: 'after',
+          runValidators: true
+        }
       );
 
       if (!serviceModifie) {
@@ -411,6 +492,7 @@ app.put(
         message: 'Service modifié avec succès.',
         data: serviceModifie
       });
+
     } catch {
       return res.status(500).json({
         success: false,
@@ -420,12 +502,14 @@ app.put(
   }
 );
 
-// ==================== DELETE : supprimer un service (protégé) ====================
+
+// ==================== SERVICES : DELETE ====================
 
 app.delete(
   '/api/services/:id',
   authenticateToken,
   async (req: Request, res: Response) => {
+
     const id = Number(req.params.id);
 
     if (!Number.isInteger(id) || id < 1) {
@@ -436,6 +520,7 @@ app.delete(
     }
 
     try {
+
       const serviceSupprime = await Service.findOneAndDelete({ id });
 
       if (!serviceSupprime) {
@@ -449,6 +534,7 @@ app.delete(
         success: true,
         message: 'Service supprimé avec succès.'
       });
+
     } catch {
       return res.status(500).json({
         success: false,
@@ -458,9 +544,11 @@ app.delete(
   }
 );
 
-// ==================== Vérifier le serveur et MongoDB ====================
+
+// ==================== HEALTH CHECK ====================
 
 app.get('/api/health', (_req: Request, res: Response) => {
+
   const mongoConnected = mongoose.connection.readyState === 1;
 
   return res.status(mongoConnected ? 200 : 503).json({
@@ -471,32 +559,44 @@ app.get('/api/health', (_req: Request, res: Response) => {
   });
 });
 
-// ==================== Route inconnue ====================
+
+// ==================== ROUTE INCONNUE ====================
 
 app.use((_req: Request, res: Response) => {
-  return res.status(404).json({ error: 'Route introuvable' });
+
+  return res.status(404).json({
+    success: false,
+    error: 'Route introuvable'
+  });
 });
 
-// ==================== Démarrage du serveur ====================
+
+// ==================== DEMARRAGE DU SERVEUR ====================
 
 async function startServer() {
+
   if (!MONGODB_URI) {
     throw new Error('La variable MONGODB_URI manque dans .env');
   }
 
   await mongoose.connect(MONGODB_URI);
+
   console.log('Connexion à MongoDB réussie.');
 
+  // Ajout des services de démonstration
+  // uniquement si la collection est vide.
+
   if (await Service.countDocuments() === 0) {
+
     await Service.insertMany([
       {
         id: 1,
-        nom: '💻Développement web',
+        nom: '💻 Développement web',
         description: 'Création de sites et d’applications avec Angular'
       },
       {
         id: 2,
-        nom: '🖌️Design d’interface',
+        nom: '🖌️ Design d’interface',
         description: 'Interfaces modernes, claires et adaptées à tous les écrans.'
       },
       {
@@ -510,7 +610,7 @@ async function startServer() {
   }
 
   app.listen(PORT, () => {
-    console.log(`API Angular démarrée sur http://localhost:${PORT}`);
+    console.log(`API démarrée sur http://localhost:${PORT}`);
   });
 }
 

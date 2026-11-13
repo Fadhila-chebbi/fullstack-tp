@@ -1,28 +1,88 @@
 
 <div class="app-shell">
+
+  <!-- HEADER -->
   <header class="site-header">
-    <a class="brand" routerLink="/">
-      <span class="brand-icon">F</span>
-      <span>FullStack<span class="brand-accent">Pro</span></span>
+
+    <a class="brand" routerLink="/" aria-label="Craftline Home">
+
+      <span class="brand-icon">C</span>
+
+      <span class="brand-name">
+        Craftline
+        <span class="brand-dot">.</span>
+      </span>
+
     </a>
 
-    <nav class="main-nav" aria-label="Navigation principale">
-      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+
+    <!-- MAIN NAVIGATION -->
+    <nav class="main-nav" aria-label="Main navigation">
+
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         Home
       </a>
-      <a routerLink="/login" routerLinkActive="active">Login</a>
-      <a routerLink="/contact" routerLinkActive="active">Contact</a>
+
+      <a
+        routerLink="/services"
+        routerLinkActive="active"
+      >
+        Services
+      </a>
+
+      <a
+        routerLink="/contact"
+        routerLinkActive="active"
+      >
+        Contact
+      </a>
+
+      <a
+        routerLink="/login"
+        routerLinkActive="active"
+      >
+        Login
+      </a>
+
     </nav>
 
-    <a class="header-cta" routerLink="/contact">Get in touch <span>↗</span></a>
+
+    <!-- HEADER ACTION -->
+    <a class="header-cta" routerLink="/contact">
+      Start a project
+      <span>↗</span>
+    </a>
+
   </header>
 
-  <main class="page-content">
-    <router-outlet />
-  </main>
 
+  <!-- PAGE CONTENT -->
+  <div class="page-content">
+    <router-outlet />
+  </div>
+
+
+  <!-- FOOTER -->
   <footer class="site-footer">
-    <span>© 2026 FullStackPro</span>
-    <span>Built with Angular</span>
+
+    <div class="footer-brand">
+      <span class="footer-logo">C</span>
+      <span>Craftline</span>
+    </div>
+
+    <p class="footer-description">
+      Thoughtful design. Quality development. Digital experiences.
+    </p>
+
+    <div class="footer-bottom">
+      <span>© 2026 Craftline. All rights reserved.</span>
+      <span>Design · Development · Innovation</span>
+    </div>
+
   </footer>
+
 </div>
