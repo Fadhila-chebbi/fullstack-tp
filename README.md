@@ -1,121 +1,100 @@
-# FullStackPro — Full Stack Web Application
+# Craftline — Application Web Full Stack
 
-## Project Overview
+## 1. Présentation du projet
 
-This repository contains the practical work for TP1 and TP3.
+**Craftline** est une application web Full Stack destinée à présenter des services numériques à travers une interface moderne, professionnelle et responsive.
 
-- **TP1:** Frontend applications developed with Angular and Next.js.
-- **TP3:** Full-stack application using Angular, Express.js, MongoDB and JWT authentication.
+Ce projet a été réalisé dans le cadre des travaux pratiques du module Full Stack Web Development.
 
-## Technologies Used
+L'application principale repose sur Angular pour le Front-End, Node.js et Express.js pour le Back-End, et MongoDB pour la persistance des données.
 
-- Angular and TypeScript
-- Next.js
-- Node.js and Express.js
-- MongoDB Atlas and Mongoose
+## 2. Technologies utilisées
+
+### Front-End
+- Angular
+- TypeScript
+- HTML5
+- CSS3
+- Angular Router
+- Angular HttpClient
+
+### Back-End
+- Node.js
+- Express.js
+- TypeScript
+- MongoDB
+- Mongoose
+
+### Sécurité
 - JWT (JSON Web Tokens)
-- bcrypt for password hashing
-- Git and GitHub
-- Render for deployment
+- bcryptjs pour le hachage des mots de passe
+- Helmet pour la sécurisation des en-têtes HTTP
+- CORS
+- Express Rate Limit
 
-## Project Structure
+### Outils et déploiement
+- Visual Studio Code
+- Git et GitHub
+- Render
 
-- `ngapp/` — Angular application and Express backend.
-- `ngapp/backend/` — Express API, MongoDB models and authentication.
-- `nxapp/` — Next.js application.
+## 3. Structure du projet
 
-## TP1 Features
-
-- Home page
-- Login page with form validation
-- Contact page with form validation
-- Navigation between pages
-
-## TP3 Features
-
-- MongoDB database connection
-- Mongoose models for users and services
-- Persistent data storage
-- User registration and login
-- Password hashing with bcrypt
-- JWT-based authentication
-- Protected API routes for creating, updating and deleting services
-- Public endpoint for retrieving services
-- Frontend and backend deployment on Render
-
-## Deployment
-
-**Frontend:**  
-https://tp3-angular-frontend.onrender.com
-
-**Backend API:**  
-https://tp3-angular-backend.onrender.com
-
-**Health endpoint:**  
-https://tp3-angular-backend.onrender.com/api/health
-
-## How to Run the Angular Application
-
-```bash
-cd ngapp
-npm install
-npx ng serve
+```text
+fullstack-tp/
+│
+├── ngapp/
+│   ├── src/
+│   │   └── app/
+│   │       ├── pages/
+│   │       │   ├── home/
+│   │       │   ├── login/
+│   │       │   ├── contact/
+│   │       │   ├── services/
+│   │       │   └── service-details/
+│   │       │
+│   │       ├── services/
+│   │       ├── app.config.ts
+│   │       ├── app.routes.ts
+│   │       ├── app.html
+│   │       └── app.css
+│   │
+│   └── backend/
+│       ├── models/
+│       │   └── Services.ts
+│       ├── server.ts
+│       ├── package.json
+│       └── tsconfig.json
+│
+├── nxapp/
+│
+└── README.md
 ```
 
-Open http://localhost:4200.
+Le dossier `nxapp/` est conservé dans le dépôt pour les travaux précédents de comparaison entre Angular et Next.js. L'application principale Craftline présentée dans ce projet est développée avec Angular.
 
-## How to Run the Next.js Application
+## 4. TP1 — Développement Front-End
 
-```bash
-cd nxapp
-npm install
-npm run dev
-```
+Le Front-End de Craftline est développé avec Angular.
 
-Open http://localhost:3000.
+### Fonctionnalités réalisées
 
-## How to Run the Backend
+- Page d'accueil moderne et responsive.
+- Page de présentation des services.
+- Pages individuelles présentant les détails de chaque service.
+- Page de connexion avec validation des formulaires.
+- Page de contact avec validation des champs.
+- Navigation entre les différentes pages avec Angular Router.
+- Utilisation de services Angular pour communiquer avec le Back-End.
+- Utilisation de HttpClient pour les requêtes HTTP.
+- Adaptation de l'interface aux différentes tailles d'écran.
 
-Open a terminal and execute:
+## 5. TP2 — Développement de l'API REST
 
-```bash
-cd ngapp/backend
-npm install
-npm run dev
-```
+Le Back-End est développé avec Node.js, Express.js et TypeScript.
 
-Configure the required environment variables in a local `.env` file.
+### Gestion des services
 
-- `PORT`: Backend port.
-- `MONGODB_URI`: MongoDB connection string.
-- `JWT_SECRET`: Secret used to sign JWT tokens.
+L'API REST permet les opérations suivantes :
 
-Never commit passwords, database credentials or JWT secrets to GitHub.
-
-## Authentication and API Security
-
-The backend uses JWT authentication to protect sensitive service-management routes. Passwords are hashed using bcrypt before being stored.
-
-Protected routes require a valid bearer token in the request's `Authorization` header.
-
-## Testing
-
-The following features were tested during development:
-
-- User registration and login
-- JWT token generation
-- Rejection of protected requests without a token
-- Successful creation of a service with a valid token
-- MongoDB connectivity
-- Frontend and backend deployment
-
-## GitHub Repository
-
-https://github.com/Fadhila-chebbi/fullstack-tp
-
-npm run dev
-
-Open http://localhost:3000.
-
-## GitHub Repository
-https://github.com/Fadhila-chebbi/fullstack-tp
+- **GET** : récupérer la liste des services.
+- **GET par identifiant** : récupérer
